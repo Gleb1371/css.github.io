@@ -1,0 +1,352 @@
+body {
+    margin-top: 0;
+    background-color: #F0F0F0;
+    font-family: "Montserrat", sans-serif;
+    color: #434343;
+}
+.one {
+    background-image: url('https://i.postimg.cc/L5Q7KxrB/translucent-image-2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 30px 0px;
+}
+.container.head {
+    max-width: 80%;
+    max-height: 10%;
+    background-color: #FFFFFF;
+    padding: 16px 20px 8px 20px;
+    border-radius: 16px;
+    margin-bottom: 1.5em;
+    margin-top: -0.5em;
+}
+.container.head a {
+    padding: 1em 4em 1.5em;
+    font-size: 14px;
+}
+.link {
+    font-size: 14px;
+    color: #F13935;
+}
+.sh {
+    text-decoration: none;
+}
+.sh img {
+    padding: 0 0 4px 0;
+}
+.sh h3 {
+    margin-left: 30px;
+    font-size: 20px;
+    font-weight: 600;
+}
+h5 {
+    font-weight: 700;
+    font-size: 28px;
+    padding-bottom: 1em;
+}
+.header nav a {
+    padding-right: 40px;
+}
+.button_1_section a {
+    text-decoration: none;
+    color: #434343;
+    padding: 3em;
+}
+.container.block1 a {
+    text-decoration: none;
+    color: #434343;
+}
+.container.block1 {
+
+    margin-top: 50px;
+}
+.form {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 2em;
+    max-width: 520px;
+}
+.form1 {
+    margin-bottom: 1em;
+}
+.headF {
+    font-weight: 600;
+    font-size: 24px;
+}
+input {
+    width: 40ch;
+    height: 3em;
+    border-radius: 16px;
+    padding: 5px;
+}
+.red,
+.white {
+    text-decoration: none;
+    border-radius: 16px;
+}
+.white {
+    color:#FFFFFF;
+}
+.red {
+    color: #FFFFFF !important;
+    background-color: #F13935;
+}
+.btn button {
+    margin-right: 10px; 
+    border-radius: 16px;
+}
+.btn a.text-white {
+    color: white; 
+    text-decoration: none;
+}
+.pay .container {
+    margin-top: 60px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    text-align: center;
+    padding: 1em 2em 0 0;
+
+}
+.col-md-3 h5 {
+    font-size: 18px;
+    padding-bottom: 0;
+}
+.col-md-3 p {
+    font-size: 12px;
+    font-weight: 400;
+}
+.container.block2 {
+    margin-top: 40px;
+}
+#block3 {
+    max-width: 80%;
+    margin: 0 6% 4em 6%;
+}
+#block3 img {
+    border-radius: 16px;
+}
+#block3 .btn {
+    margin-top: 0;
+}
+#block3 .btn a {
+    padding: 0.5em 1.5em;
+}
+.so {
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    margin: 2em;
+}
+.carousel-item img {
+    border-radius: 16px;
+    max-width: 600px;
+    max-height: 400px;
+    margin: auto;
+    object-fit: cover;
+}
+#carouselExampleControls {
+    margin-bottom: 6em;
+}
+.fil.container {
+    margin-bottom: 90px;
+}
+.foot {
+    background-image: url(https://i.postimg.cc/wBf5mCVX/translucent-image-4.png);
+}
+.empty {
+    height: 5em;
+}
+.fil {
+    background-color: #FFFFFF;
+    padding: 2em 4em;
+    max-width: 80%;
+    border-radius: 16px;
+}
+.fil h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+.fil a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+}
+.filH {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+    padding-bottom: 1em;
+}
+footer {
+    background-color: #373535;
+    text-align: center;
+}
+footer a {
+    text-decoration: none;
+    color: #F5F5F5 !important;
+}
+footer p {
+    font-size: 12px;
+    color: #F5F5F5;
+}
+.container-fluid.foot1 {
+    padding-top: 40px;
+}
+.soo {
+    max-width: 1em;
+}
+.text .btn{
+    margin-bottom: 1em;
+}
+.text .btn .red{
+    padding: 0 1em;
+}
+#block1 li a{
+    text-decoration: none;
+    color:#434343
+}
+@media (max-width: 600px) {
+    .head img {
+        width: 45px;
+        height: 45px;
+    }
+    h5{
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .filH {
+        font-size: 20px;
+    }
+    .container.head h3 {
+        font-size: 16px;
+    }
+    .container.head2 a{
+        font-size: 8px;
+    }
+    .button_1_section {
+        font-size: 8px;
+
+    }
+    .container.block1 h5 {
+        font-size: 17px;
+    }
+    .container.block1 li {
+        font-size: 12px;
+    }
+    .headF {
+        font-size: 16px;
+    }
+    .pF {
+        font-size: 12px;
+    }
+    .form1 {
+        max-width: 100%;
+    }
+    article .text1 {
+        font-size: 14px;
+    }
+    article .text2 {
+        font-size: 9px;
+    }
+    .so {
+        font-size: 20px;
+    }
+    .foot h3 {
+        font-size: 14px;
+    }
+    .foot a {
+        font-size: 12px;
+    }
+    .foot1 .row p {
+        font-size: 12px;
+    }
+    .text h2 {
+        font-size: 20px;
+    }
+    .text p {
+        font-size: 12px;
+    }
+    .text .btn {
+        font-size: 12px;
+    }
+    
+}
+/* Стили для модального окна */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 80%;
+    margin: 10% auto; /* Для центрирования по вертикали и небольшого отступа сверху */
+}
+
+.modal input, .modal a {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Учитываем padding и border в размерах элемента */
+}
+
+.modal a {
+    background-color: #F13935;
+    color: #F0F0F0;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+.inp {
+    border-radius: 16px;
+    border-color: #373535;
+}
+@media screen and (min-width: 768px) {
+    .modal-content {
+        max-width: 40%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .custom-alert {
+        font-weight:400;
+        font-size: 14px;
+    }
+}
+.red-btn {
+    background-color:#F13935; /* Красный цвет */
+    color: #fff; /* Белый цвет текста */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+}
+.error {
+    border: 1px solid red;
+}
+.error-alert {
+    color: red;
+}
+
+.success-alert {
+    color: green;
+}

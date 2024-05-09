@@ -1,0 +1,191 @@
+body {
+    background-image: url(https://i.postimg.cc/nhZV4yv2/gradient-blue-abstract-background-smooth-dark-blue-with-black-vignette-studio-1258-66999.jpg);
+    background-size: cover;
+    font-family: "Montserrat", sans-serif;
+    color: #434343;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+.one {
+    padding: 30px 0px;
+}
+.container.head {
+    max-width: 80%;
+    max-height: 10%;
+    background-color: #FFFFFF;
+    padding: 16px 20px 8px 20px;
+    border-radius: 16px;
+    margin-bottom: 1.5em;
+    margin-top: -0.5em;
+}
+.container.head a {
+    padding: 1em 4em 1.5em;
+    font-size: 16px;
+}
+.link {
+    font-size: 14px;
+    color: #F13935;
+}
+.sh {
+    text-decoration: none;
+}
+.sh img {
+    padding: 0 0 4px 0;
+}
+.sh h3 {
+    margin-left: 30px;
+    font-size: 20px;
+    font-weight: 600;
+}
+h5 {
+    font-weight: 700;
+    font-size: 28px;
+    padding-bottom: 1em;
+}
+.form2 {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center;
+}
+.form2 a {
+    color: #F13935;
+    text-decoration: none;
+}
+.one1,
+.two,
+.three,
+.four,
+.five {
+    border-radius: 40px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 6em 4em;
+}
+.one1 {
+    background-image: url(https://i.postimg.cc/DZKpWFLy/flat-design-english-school-background-23-2149487419.avif);
+}
+.two {
+    background-image: url(https://i.postimg.cc/T29zLk0q/1674335670-catherineasquithgallery-com-p-ubrat-serii-fon-s-fotografii-teksta-foto-122.jpg);
+}
+.three {
+    background-image: url(https://i.postimg.cc/9MhVc6fy/close-up-view-chinese-ink-concept-23-2148785950.jpg);
+}
+.four {
+    background-image: url(https://i.postimg.cc/9Q2fBgT8/blank-math-template-with-math-tools-elements-1639-26642.avif);
+}
+.five {
+    background-image: url(https://i.postimg.cc/mkXg2Tht/thoughtful-woman-with-notebook-23-2147771761.jpg);
+    margin-bottom: 50px;
+}
+footer {
+    background-color: #373535;
+    text-align: center;
+}
+footer a {
+    text-decoration: none;
+    color: #F5F5F5 !important;
+}
+footer p {
+    font-size: 12px;
+    color: #F5F5F5;
+}
+.container-fluid.foot1 {
+    padding-top: 40px;
+}
+.soo {
+    max-width: 1em;
+}
+.foot1 a {
+    font-size: 17px;
+}
+@media (max-width: 600px) {
+    .header.one h3 {
+        font-size: 14px;
+        margin-right: 0;
+    }
+    .header.one a {
+        font-size: 12px;
+    }
+    .foot1 a {
+        font-size: 12px;
+    }
+    footer p {
+        font-size: 8px;
+        color: #F5F5F5;
+    }
+    .header img{
+        width: 45px;
+        height: 45px;
+    }
+    .container.head a {
+        padding: 7px 20px 16px 20px;
+    }
+    .form2 article {
+        font-size: 14px;
+    }
+    .one1,
+    .two,
+    .three,
+    .four,
+    .five {
+        border-radius: 40px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 6em 6em;
+    }
+}
+@media (min-width: 601px) and (max-width: 1300px){
+    .form2 article {
+        font-size: 16px;
+    }
+    .one1,
+    .two,
+    .three,
+    .four,
+    .five {
+        border-radius: 40px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 6em 4em;
+    }
+}
+article {
+    max-width: 24em;
+    max-height: 24em;
+    margin: 1em;
+    text-align: center;
+    font-size: 20px;
+    transition: transform 0.5s, background-color 0.5s;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s;
+}
+
+article.clicked {
+    transform: rotateY(180deg);
+}
+
+.back {
+    color:blue;
+    display: none;
+    transform: rotateY(180deg);
+}
+article:hover .back {
+    color:#F13935; /* Цвет текста при наведении */
+}
+
+article.clicked .front {
+    display: none;
+}
+
+article.clicked .back {
+    display: block;
+}
