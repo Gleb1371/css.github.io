@@ -9,16 +9,17 @@ SECRET_KEY = "praktika2024"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 90
 
+app = FastAPI()
+
 # Устанавливаем соединение с базой данных PostgreSQL через pgAdmin 4
 connection = psycopg2.connect(
-        dbname="dpg-coqfvgn79t8c738glb60-a",
+        host="dpg-coqfvgn79t8c738glb60-a",
         port=5432,
         database= "hainan_v1i3",
         user="hainan_v1i3_user",
         password="lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ"
     )
 
-app = FastAPI()
 @app.get("/") 
 def main(): 
     return FileResponse("index.html")
