@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://i.postimg.cc/JzCZLMVD/image.jpg">
+    <title>Хайнань</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/LKB.css">
+</head>
+
+<body>
+    <div class="header one">
+        <nav class="navbar navbar-expand-lg" style="display:block">
+            <div class="container head">
+                <div class="sh d-flex align-items-center">
+                    <img src="https://i.postimg.cc/JzCZLMVD/image.jpg" width="81" height="74">
+                    <h3>Вход в личный кабинет преподавателя</h3>
+                </div>
+                <a href="index.html" class="link">Главная</a>
+            </div>
+        </nav>
+        <div class="form">
+            <div class="container">
+                <h3 class="text-center">Вход</h3>
+                <form id="loginForm" action="#" method="POST">
+                    <div class="mb-3">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Логин">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Пароль">
+                    </div>
+                    <button type="submit" class="btn btn-danger" style="text-align: center;">Войти</button>
+                    <div id="errorMessage" class="mt-2" style="color: red;"></div>
+                </form>
+            </div>
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('loginForm');
+                const usernameInput = document.getElementById('username');
+                const passwordInput = document.getElementById('password');
+                const errorMessage = document.getElementById('errorMessage');
+                const admins = JSON.parse(localStorage.getItem('admins')) || [];
+                const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+        
+                // Слушатель события на отправку формы
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const enteredUsername = usernameInput.value.trim();
+                    const enteredPassword = passwordInput.value.trim();
+        
+                    // Проверяем введенные данные с данными администраторов
+                    const isAdmin = admins.some(admin => admin.username === enteredUsername && admin.password === enteredPassword);
+        
+                    // Проверяем введенные данные с данными пользователей
+                    const isUser = teachers.some(user => user.username === enteredUsername && user.password === enteredPassword);
+        
+                    if (enteredUsername !== '' && enteredPassword !== '') {
+                        if (isAdmin || isUser) {
+                            // Если введенные данные соответствуют администратору, перенаправляем на страницу admin.html
+                            if (isAdmin) {
+                                window.location.href = 'admin.html';
+                            } else {
+                                // В противном случае перенаправляем на страницу LKMB.html
+                                window.location.href = 'LKMB.html';
+                            }
+                        } else {
+                            // Выводим сообщение об ошибке
+                            errorMessage.textContent = 'Неверные данные!';
+                        }
+                    } else {
+                        // Выводим сообщение об ошибке
+                        errorMessage.textContent = 'Введите данные!';
+                    }
+                });
+            });
+        </script>
+
+    <footer class="container-fluid foot1">
+        <div class="row">
+            <div class="col-sm-4 col-4">
+                <a href="tel:+79231405094">+7-923-140-50-94</a>
+                <br><br>
+                <a href="tel:+79139135094">+7-913-913-50-94</a>
+                <br><br>
+                <a href="https://vk.com/hainan_language_school" target="_blank">Наша группа в ВК</a>
+            </div>
+            <div class="col-sm-4 col-4">
+                <a href="par.html">Наши партнёры</a>
+                <br><br>
+                <a href="SMI.html">Публикации в СМИ</a>
+                <br><br>
+                <a href="Certif.html">Благодарности и грамоты</a>
+                <br><br><br>
+                <p>©️2014-2024</p>
+            </div>
+            <div class="col-sm-4 col-4">
+                <a href="vac.html">Вакансии</a>
+                <br><br>
+                <a href="SOO1.html" class="soo">Сведения об<br>образовательной<br>организации</a>
+            </div>
+        </div>
+    </footer>
+</body>

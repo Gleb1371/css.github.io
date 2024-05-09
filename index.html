@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://i.postimg.cc/JzCZLMVD/image.jpg">
+    <title>Хайнань</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/no.css">
+</head>
+
+<body>
+    <div class="header one">
+        <nav class="navbar navbar-expand-lg" style="display:block">
+            <div class="container head">
+                <div class="sh d-flex align-items-center">
+                    <img src="https://i.postimg.cc/JzCZLMVD/image.jpg" width="81" height="74">
+                    <h3>ЧУДО Языковой центр "Хайнань"</h3>
+                </div>
+                <a href="   LKB.html" class="link">Личный кабинет преподавателя</a>
+            </div>
+        </nav>
+        <div class="container head2">
+            <div class="row text-center ">
+                <div class="button_1_section ">
+                    <a href="#block1">О нас</a>
+                    <a href="#block2">Запись в группу</a>
+                    <a href="#block3">Поездки в Китай</a>
+                    <a href="#block3">Запись в поездку</a>
+                    <a href="#block5">Филиалы</a>
+                    <a href="#block6">Стоимость</a>
+                </div>
+            </div>
+        </div>
+        <div class="container p-5" id = "block1">
+            <div class="row justify-content-between">
+                <div class=" offset-lg-1 col-lg-5 col-12">
+                    <h5>Частное учреждение дополнительного образования Языковой центр "Хайнань"</h5>
+                    <ul>
+                        <li>Входит в <a href="http://eforumspb.ru/top100_2019_4" target="_blank"><b>«100 лучших
+                                    организаций дополнительного образования России»</b></a></li>
+                        <li>Является официальным партнером и участником программы правительства Китая <a
+                                href="entarnal.html"><b>«Один пояс – один путь»</b></a> (一带一路)</li>
+                        <li>Является партнером Городского центра развития образования мэрии города Новосибирска и
+                            разработчиком заданий на <b>Всероссийскую олимпиаду школьников</b> по китайскому языку</li>
+                    </ul>
+                </div>                
+                <div class="col-lg-5 col-12" id="block2">
+                    <div class="form">
+                        <p class="headF">Записаться на занятия</p>
+                        <p class="pF">Уроки проходят на базе общеобразовательных школ или в нашем офисе в группах или индивидуально</p>
+                        <div class="d-flex">
+                            <input type="text" id="name" name="name" required minlength="4" maxlength="20" class="form1" placeholder="Ваше имя" />
+                        </div>
+                        <div class="d-flex">
+                            <input class="inp" type="tel" id="phone" name="phone" required placeholder="Номер телефона" class="form1" oninput="this.value = this.value.replace(/[^\d+\-\s]/g, ''); this.classList.remove('error')">
+                            <span class="error-message" style="color: red;"></span>
+                        </div>
+                        <button type="submit" formaction="#" class="btn red m-3">Записаться</button>
+                        <div id="errorAlert" class="error-alert"></div>
+                        <div id="successAlert" class="success-alert"></div>
+                    </div>
+                </div>
+                <!-- <script>
+                    const form = document.querySelector('.form');
+                    const nameInput = document.getElementById('name');
+                    const phoneInput = document.getElementById('phone');
+                    const errorAlert = document.getElementById('errorAlert');
+                    const successAlert = document.getElementById('successAlert');
+                    // Проверяем, есть ли уже сохраненные данные в Local Storage
+                    let classes = localStorage.getItem("classes");
+                    if (!classes) {
+                        classes = [];
+                    } else {
+                        classes = JSON.parse(classes);
+                    }
+                    form.addEventListener("click", function (event) {
+                        if (event.target.matches(".btn")) {
+                            const name = nameInput.value.trim(); // Удаляем начальные и конечные пробелы
+                            const phone = phoneInput.value.trim();
+                            let hasError = false; // Флаг для обозначения наличия ошибок
+                            if (name.length == 0 || phone.length == 0) {
+                                showError("Введите данные!");
+                                hasError = true;
+                            } else {
+                                nameInput.classList.remove('error');
+                                phoneInput.classList.remove('error');
+                                if (!/^\+?[0-9\s\-\(\)]+$/.test(phone) || phone.replace(/[^\d]/g, '').length !== 11) {
+                                    showError("Некорректный номер телефона!");
+                                    hasError = true;
+                                }
+                            }
+                            if (!hasError) {
+                                // Проверяем, существуют ли уже такие данные в объекте classes
+                                const existingClass = classes.find(item => item.username === name && item.number === phone);
+                                if (!existingClass) {
+                                    classes.push({ username: name, number: phone });
+                                    // Сохраняем данные в Local Storage
+                                    localStorage.setItem("classes", JSON.stringify(classes));
+                                    showSuccess("Спасибо, мы вам перезвоним!");
+                                } else {
+                                    showSuccess("Данные уже существуют!");
+                                }
+                            }
+                        }
+                    });
+                    function showError(message) {
+                        errorAlert.textContent = message;
+                        errorAlert.classList.add('active');
+                        successAlert.textContent = "";
+                        successAlert.classList.remove('active');
+                    }
+                    function showSuccess(message) {
+                        successAlert.textContent = message;
+                        successAlert.classList.add('active');
+                        errorAlert.textContent = "";
+                        errorAlert.classList.remove('active');
+                    }
+                </script> -->
+                <script>
+                    const form = document.querySelector('.form');
+                    const nameInput = document.getElementById('name');
+                    const phoneInput = document.getElementById('phone');
+                    const errorAlert = document.getElementById('errorAlert');
+                    const successAlert = document.getElementById('successAlert');
+                
+                    form.addEventListener("click", async function (event) {
+                        if (event.target.matches(".btn")) {
+                            const name = nameInput.value.trim();
+                            const phone = phoneInput.value.trim();
+                            let hasError = false;
+                
+                            if (name.length === 0 || phone.length === 0) {
+                                showError("Введите данные!");
+                                hasError = true;
+                            } else {
+                                nameInput.classList.remove('error');
+                                phoneInput.classList.remove('error');
+                                if (!/^\d+$/.test(phone) || phone.length !== 11) {
+                                    showError("Некорректный номер телефона!");
+                                    hasError = true;
+                                }
+                            }
+                
+                            if (!hasError) {
+                                try {
+                                    const response = await fetch('/clients', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            first_name: name,
+                                            phone_number: phone,
+                                            role: 'classes' // Здесь можно указать роль клиента
+                                        })
+                                    });
+                
+                                    if (!response.ok) {
+                                        const errorMessage = await response.text();
+                                        showError(errorMessage);
+                                        return;
+                                    }
+                
+                                    const data = await response.json();
+                                    showSuccess(data.message);
+                                } catch (error) {
+                                    console.error('Ошибка:', error);
+                                    showError('Произошла ошибка при отправке запроса');
+                                }
+                            }
+                        }
+                    });
+                
+                    function showError(message) {
+                        errorAlert.textContent = message;
+                        errorAlert.classList.add('active');
+                        successAlert.textContent = "";
+                        successAlert.classList.remove('active');
+                    }
+                
+                    function showSuccess(message) {
+                        successAlert.textContent = message;
+                        successAlert.classList.add('active');
+                        errorAlert.textContent = "";
+                        errorAlert.classList.remove('active');
+                    }
+                </script>                
+            </div>
+        </div>
+    </div>
+    <div class="pay" id = "block6">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-12  ">
+                    <article>
+                        <h5 class="text1">Занятия в группе</h5>
+                        <p class="text2">Английский, китайский - <br> 4000-5600 руб./мес.</p>
+                    </article>
+                </div>
+                <div class="col-md-3 col-12 text1">
+                    <article>
+                        <h5 class="text1">Индивидуальные занятия</h5>
+                        <p class="text2">Английский, китайский - 8000 руб./мес.</p>
+                    </article>
+                </div>
+                <div class="col-md-3 col-12 text1">
+                    <article>
+                        <h5 class="text1">Курсы для первоклассников</h5>
+                        <p class="text2">Китайский язык - 4000 руб./мес.</p>
+                    </article>
+                </div>
+                <div class="col-md-3 col-12 text1">
+                    <article>
+                        <h5 class="text1">Подготовка к ЕГЭ/ОГЭ</h5>
+                        <p class="text2">Русский язык, математика - 6400 руб./мес.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container block2">
+        <section id="block3" class="row">
+            <div class="col-lg-6 col-12">
+                <article class="text">
+                    <h2>Поездки в Китай</h2>
+                    <p>
+                        С 2015 года Языковой центр "Хайнань" организует культурно-образовательные поездки в Китай,
+                        где наши ученики не только интенсивно обучаются языку на базе китайских вузов, но и глубоко
+                        постигают культуру страны,
+                        знакомятся со своими сверстниками, получают незабываемые впечатления на экскурсиях,
+                        что повышают мотивацию к дальнейшему изучению китайского языка.
+                    </p>
+                    <div class="btn">
+                        <button type="button" class="btn btn-danger" id="modalBtn">Хочу в Китай!</button>
+                        <button type="button" class="btn btn-secondary"><a href="MoreB.html" class="text-white" style="padding: 0;">Узнать больше</a></button>
+                    </div>
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <div class="container">
+                                <div class="mb-3">
+                                    <input class="inp" type="text" id="nameModal" name="nameModal" class="form-control" placeholder="Ваше имя" required minlength="4" maxlength="20">
+                                </div>
+                                <div class="mb-3">
+                                    <input class="inp" type="tel" id="phoneModal" name="phoneModal" required placeholder="Номер телефона" class="form1" oninput="this.value = this.value.replace(/[^\d+\-\s]/g, ''); this.classList.remove('error')">
+                                    <span class="error-message" style="color: red;"></span>
+                                </div>
+                                <div class="text-center">
+                                    <button id="submitBtn" type="button" class="btn red-btn">Оставить заявку</button>
+                                </div>
+                                <div id="errorAlert1" style="color: red; margin-top: 10px;"></div>
+                                <div id="successAlert1" style="color: green; margin-top: 10px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var modalBtn = document.getElementById("modalBtn");
+                            var modal = document.getElementById("myModal");
+                            var closeBtn = document.querySelector(".modal-content .close");
+                            var nameInput = document.getElementById('nameModal');
+                            var phoneInput = document.getElementById('phoneModal');
+                            var submitBtn = document.getElementById('submitBtn');
+                            
+                            // Проверяем, есть ли уже сохраненные данные в Local Storage
+                            let trips = localStorage.getItem("trips");
+                            if (!trips) {
+                                trips = [];
+                            } else {
+                                trips = JSON.parse(trips);
+                            }
+                            
+                            modalBtn.addEventListener("click", function() {
+                                modal.style.display = "block";
+                            });
+                            
+                            closeBtn.addEventListener("click", function() {
+                                modal.style.display = "none";
+                            });
+                            
+                            submitBtn.addEventListener("click", function(event) {
+                                event.preventDefault();
+                                var name = nameInput.value.trim();
+                                var phone = phoneInput.value.trim();
+                                var errorAlert1 = document.getElementById('errorAlert1'); // Используем правильный идентификатор
+                                var successAlert1 = document.getElementById('successAlert1'); // Используем правильный идентификатор
+                                
+                                if (name.length == 0 || phone.length == 0) {
+                                    errorAlert1.textContent = "Введите данные!";
+                                    nameInput.classList.add('error');
+                                    phoneInput.classList.add('error');
+                                } else {
+                                    nameInput.classList.remove('error');
+                                    phoneInput.classList.remove('error');
+                                    
+                                    if (!/^\+?[0-9\s\-\(\)]+$/.test(phone) || phone.replace(/[^\d]/g, '').length !== 11) {
+                                        errorAlert1.textContent = "Некорректный номер телефона!";
+                                        phoneInput.classList.add('error');
+                                    } else {
+                                        errorAlert1.textContent = ""; // Очистить сообщение об ошибке при вводе корректных данных
+                                        successAlert1.textContent = "Спасибо, мы вам перезвоним!";
+                                        
+                                        // Создаем объект с данными заявки
+                                        var trip = {
+                                            username: name,
+                                            number: phone
+                                        };
+                                        
+                                        // Проверяем, существует ли уже такая запись в trips
+                                        var isTripExist = trips.some(function(item) {
+                                            return item.username === name && item.number === phone;
+                                        });
+                                        
+                                        if (!isTripExist) {
+                                            trips.push(trip);
+                                            localStorage.setItem("trips", JSON.stringify(trips));
+                                        } else {
+                                            successAlert1.textContent = "Данные уже существуют!";
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>                           
+                </article>
+            </div>
+            <div class="col-lg-5 col-12 offset-lg-1">
+                <article class="photo">
+                    <img src="https://i.postimg.cc/nLQRz6zC/photo-2024-02-29-18-20-35.jpg" class="img-fluid">
+                </article>
+            </div>
+        </section>
+    </div>
+    <div class="so">Фотографии из наших поездок</div>
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://i.postimg.cc/jdFWsjFQ/photo-2024-02-29-19-00-08-1.jpg"
+                    class="d-block w-100 img-fluid">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.postimg.cc/3NPdFSpf/photo-2024-02-29-18-20-38-1.jpg"
+                    class="d-block w-100 img-fluid">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.postimg.cc/rsc8VB1k/photo-2024-02-29-18-58-49.jpg" class="d-block w-100 img-fluid">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.postimg.cc/wTYppY64/photo-2024-02-29-18-50-56.jpg" class="d-block w-100 img-fluid">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.postimg.cc/rwCWJTpB/photo-2024-02-29-18-59-44.jpg" class="d-block w-100 img-fluid">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="foot">
+        <div class="empty"></div>
+        <div id="block5" class="fil container">
+            <p class="filH">Филиалы</p>
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <h3>Головной офис</h3>
+                    <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                        target="_blank">
+                        город Новосибирск, улица Кропоткина, д. 271, офис 506</a>
+                    <br><br>
+                    <h3>МБОУ СОШ №168 с углубленным изучением предметов художественно-эстетического цикла</h3>
+                    <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                        target="_blank">
+                        город Новосибирск, улица Сибирская, д. 30</a>
+                    <br><br>
+                    <h3>МБОУ «Экономический лицей»</h3>
+                    <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                        target="_blank">
+                        город Новосибирск, улица Крылова, д. 44</a>
+                    <br><br>
+                    <h3>МАОУ Лицей №159</h3>
+                    <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                        target="_blank">
+                        город Новосибирск, улица Дуси Ковальчук, д. 270/2</a>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <article class="fil1">
+                        <h3>МАОУ Лицей №159</h3>
+                        <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                            target="_blank">
+                            город Новосибирск, улица Северная, д. 31</a>
+                        <br><br>
+                        <h3>МАОУ Лицей №159</h3>
+                        <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                            target="_blank">
+                            город Новосибирск, улица Дуси Ковальчук, д. 270а</a>
+                        <br><br>
+                        <h3>МБОУ Гимназия №9</h3>
+                        <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                            target="_blank">
+                            город Новосибирск, улица Калинина, д. 255 </a>
+                        <br><br>
+                        <h3>МАОУ Гимназия №10</h3>
+                        <a href="https://2gis.ru/novosibirsk/firm/141265769948205?m=82.93703%2C55.057893%2F16.84"
+                            target="_blank">
+                            город Новосибирск, улица Революции д. 31</a>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <footer class="container-fluid foot1">
+            <div class="row">
+                <div class="col-sm-4 col-4">
+                    <a href="tel:+79231405094">+7-923-140-50-94</a>
+                    <br><br>
+                    <a href="tel:+79139135094">+7-913-913-50-94</a>
+                    <br><br>
+                    <a href="https://vk.com/hainan_language_school" target="_blank">Наша группа в ВК</a>
+                </div>
+                <div class="col-sm-4 col-4">
+                    <a href="par.html">Наши партнёры</a>
+                    <br><br>
+                    <a href="SMI.html">Публикации в СМИ</a>
+                    <br><br>
+                    <a href="Certif.html">Благодарности и грамоты</a>
+                    <br><br><br>
+                    <p>©️2014-2024</p>
+                </div>
+                <div class="col-sm-4 col-4">
+                    <a href="vac.html">Вакансии</a>
+                    <br><br>
+                    <a href="SOO1.html" class="soo">Сведения об<br>образовательной<br>организации</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
