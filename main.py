@@ -4,6 +4,7 @@ import psycopg2
 import jwt
 from datetime import datetime, timedelta
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 SECRET_KEY = "praktika2024"
 ALGORITHM = "HS256"
@@ -19,7 +20,7 @@ connection = psycopg2.connect(
         user="hainan_v1i3_user",
         password="lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ"
     )
-
+app.mount("/static", StaticFiles(directory="static"), name = "static")
 @app.get("/") 
 def main(): 
     return FileResponse("index.html")
