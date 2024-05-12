@@ -26,6 +26,10 @@ app.mount("/static", StaticFiles(directory="static"), name = "static")
 def main(): 
     return FileResponse("index.html")
 
+@app.get("/index.html")
+def index():
+    return FileResponse("index.html")
+
 @app.get("/Certif.html")
 def Certif():
     return FileResponse("Certif.html")
