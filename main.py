@@ -42,6 +42,50 @@ def LKB():
 def LKMB():
     return FileResponse("LKMB.html")
 
+@app.get("/MoreB.html")
+def MoreB():
+    return FileResponse("MoreB.html")
+
+@app.get("/SMI.html")
+def SMI():
+    return FileResponse("SMI.html")
+
+@app.get("/SOO1.html")
+def SOO1():
+    return FileResponse("SOO1.html")
+
+@app.get("/admin.html")
+def admin():
+    return FileResponse("admin.html")
+
+@app.get("/classes.html")
+def classes():
+    return FileResponse("classes.html")
+
+@app.get("/entarnal.html")
+def entarnal():
+    return FileResponse("entarnal.html")
+
+@app.get("/par.html")
+def par():
+    return FileResponse("par.html")
+
+@app.get("/sadmin.html")
+def sadmin():
+    return FileResponse("sadmin.html")
+
+@app.get("/steach.html")
+def steach():
+    return FileResponse("steach.html")
+
+@app.get("/trips.html")
+def trips():
+    return FileResponse("trips.html")
+
+@app.get("/vac.html")
+def vac():
+    return FileResponse("vac.html")
+
 class User(BaseModel): 
     login: str
     password: str
