@@ -21,9 +21,22 @@ connection = psycopg2.connect(
         password="lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ"
     )
 app.mount("/static", StaticFiles(directory="static"), name = "static")
+
 @app.get("/") 
 def main(): 
     return FileResponse("index.html")
+
+@app.get("/Certif.html")
+def Certif():
+    return FileResponse("Certif.html")
+
+@app.get("/LKB.html")
+def LKB():
+    return FileResponse("LKB.html")
+
+@app.get("/LKMB.html")
+def LKMB():
+    return FileResponse("LKMB.html")
 
 class User(BaseModel): 
     login: str
