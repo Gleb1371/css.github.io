@@ -5,7 +5,7 @@ import jwt
 from datetime import datetime, timedelta
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
-
+from typing import Optional
 SECRET_KEY = "praktika2024"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 90
@@ -20,71 +20,10 @@ connection = psycopg2.connect(
         user="hainan_v1i3_user",
         password="lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ"
     )
-app.mount("/static", StaticFiles(directory="static"), name = "static")
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/") 
 def main(): 
     return FileResponse("index.html")
-
-@app.get("/index.html")
-def index():
-    return FileResponse("index.html")
-
-@app.get("/Certif.html")
-def Certif():
-    return FileResponse("Certif.html")
-
-@app.get("/LKB.html")
-def LKB():
-    return FileResponse("LKB.html")
-
-@app.get("/LKMB.html")
-def LKMB():
-    return FileResponse("LKMB.html")
-
-@app.get("/MoreB.html")
-def MoreB():
-    return FileResponse("MoreB.html")
-
-@app.get("/SMI.html")
-def SMI():
-    return FileResponse("SMI.html")
-
-@app.get("/SOO1.html")
-def SOO1():
-    return FileResponse("SOO1.html")
-
-@app.get("/admin.html")
-def admin():
-    return FileResponse("admin.html")
-
-@app.get("/classes.html")
-def classes():
-    return FileResponse("classes.html")
-
-@app.get("/entarnal.html")
-def entarnal():
-    return FileResponse("entarnal.html")
-
-@app.get("/par.html")
-def par():
-    return FileResponse("par.html")
-
-@app.get("/sadmin.html")
-def sadmin():
-    return FileResponse("sadmin.html")
-
-@app.get("/steach.html")
-def steach():
-    return FileResponse("steach.html")
-
-@app.get("/trips.html")
-def trips():
-    return FileResponse("trips.html")
-
-@app.get("/vac.html")
-def vac():
-    return FileResponse("vac.html")
 
 class User(BaseModel): 
     login: str
@@ -94,9 +33,9 @@ class User(BaseModel):
     role: str
 
 class Client(BaseModel):
-    first_name: str
-    phone_number: str
-    role: str
+    first_name: Optional[str]
+    phone_number: Optional[str]
+    role: Optional[str]
 
 @app.get("/users") 
 def get_users(): 
@@ -220,24 +159,29 @@ def delete_client_by_id(id: int):
     return {"message": f"Клиент с ID {id} удален"}
 
 @app.post("/clients")
-def create_client(client: Client):
+def client(user_data: Client):
     cursor = connection.cursor()
-    cursor.execute(
-        "SELECT * FROM clients WHERE first_name = %s AND phone_number = %s AND role = %s",
-        (client.first_name, client.phone_number, client.role)
-    )
-    existing_client = cursor.fetchone()
-    if existing_client:
-        cursor.close()
-        raise HTTPException(status_code=400, detail="Клиент с этими данными уже существует")
+    # есть ли такой пользователь?
+    user_look = "SELECT * FROM clients WHERE phone_number = %s"
+    user_data_ch = (user_data.phone_number,)
+    cursor.execute(user_look, user_data_ch)
+    answer = cursor.fetchone()
+    if not user_data.phone_number and user_data.first_name:
+        raise HTTPException(status_code=400, detail="Не заполнены обязательные поля")
+    if answer:
+        raise HTTPException(
+            status_code=400,
+            detail="чел с таким номером телефона уже существует)",
+        )
+         
 
-    cursor.execute(
-        "INSERT INTO clients (first_name, phone_number, role) VALUES (%s, %s, %s)",
-        (client.first_name, client.phone_number, client.role)
-    )
+    # иначе новый пользователь
+    sql = "INSERT INTO clients (phone_number, first_name,role) VALUES (%s, %s,%s)"
+    val = (user_data.phone_number, user_data.first_name,user_data.role)
+    cursor.execute(sql, val)
     connection.commit()
-    cursor.close()
-    return {"message": "Клиент успешно создан"}
+    print("чел добавлен")
+    return {"message": "чел добавлен"}
 
 @app.put("/clients/{id}")
 def update_client(id: int, client_update: Client):
