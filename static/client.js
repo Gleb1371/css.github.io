@@ -16,7 +16,7 @@ function clientpost() {
                     if (errorResponse.error) {
                         alert("Ошибка: " + errorResponse.error);
                     } else {
-                        showError("Такие данные уже существуют.");
+                        showSuccess("Даннные с таким номером телефона уже существуют.");
                     }
                 }
                 catch (error) {
@@ -98,7 +98,7 @@ function post1() {
                         if (errorResponse.error) {
                             alert("Ошибка: " + errorResponse.error);
                         } else {
-                            showErrorr("Такие данные уже существуют.");
+                            showSuccess("Даннные с таким номером телефона уже существуют.");
                         }
                     } catch (error) {
                         showErrorr("Произошла ошибка. Пожалуйста, попробуйте еще раз.");
