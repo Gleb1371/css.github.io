@@ -161,13 +161,28 @@ def delete_client_by_id(id: int):
 @app.post("/clients")
 def client(user_data: Client):
     cursor = connection.cursor()
+    # есть ли такой пользователь?
+    user_look = "SELECT * FROM clients WHERE phone_number = %s"
+    user_data_ch = (user_data.phone_number,)
+    cursor.execute(user_look, user_data_ch)
+    answer = cursor.fetchone()
+    if not user_data.phone_number and user_data.first_name:
+        raise HTTPException(status_code=400, detail="Не заполнены обязательные поля")
+    if answer:
+        raise HTTPException(
+            status_code=400,
+            detail="чел с таким номером телефона уже существует)",
+        )
+         
 
+    # иначе новый пользователь
     sql = "INSERT INTO clients (phone_number, first_name,role) VALUES (%s, %s,%s)"
     val = (user_data.phone_number, user_data.first_name,user_data.role)
     cursor.execute(sql, val)
     connection.commit()
     print("чел добавлен")
     return {"message": "чел добавлен"}
+
 
 @app.put("/clients/{id}")
 def update_client(id: int, client_update: Client):
