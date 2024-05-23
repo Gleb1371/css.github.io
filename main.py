@@ -27,13 +27,13 @@ def main():
 @app.get("/index.html") 
 def main1(): 
     return FileResponse("index.html")
-@app.get("/admin") 
+@app.get("/admin.html") 
 def main2(): 
     return FileResponse("admin.html")
-@app.get("/classes") 
+@app.get("/classes.html") 
 def main3(): 
     return FileResponse("classes.html")
-@app.get("/entarnal") 
+@app.get("/entarnal.html") 
 def main4(): 
     return FileResponse("entarnal.html")
 
@@ -42,13 +42,13 @@ def main4():
 @app.get("/Certif.html") 
 def main5(): 
     return FileResponse("Certif.html")
-@app.get("/LKB") 
+@app.get("/LKB.html") 
 def main6(): 
     return FileResponse("LKB.html")
-@app.get("/LKBM") 
+@app.get("/LKBM.html") 
 def main7(): 
     return FileResponse("LKBM.html")
-@app.get("/MoreB") 
+@app.get("/MoreB.html") 
 def main8(): 
     return FileResponse("MoreB.html")
 
@@ -56,24 +56,24 @@ def main8():
 @app.get("/SOO1.html") 
 def SOO1(): 
     return FileResponse("SOO1.html")
-@app.get("/SMI") 
+@app.get("/SMI.html") 
 def SMI(): 
     return FileResponse("SMI.html")
-@app.get("/par") 
+@app.get("/par.html") 
 def par(): 
     return FileResponse("par.html")
-@app.get("/sadmin") 
+@app.get("/sadmin.html") 
 def sadmin(): 
     return FileResponse("sadmin.html")
 
 
-@app.get("/steach") 
+@app.get("/steach.html") 
 def steach(): 
     return FileResponse("steach.html")
-@app.get("/trips") 
+@app.get("/trips.html") 
 def trips(): 
     return FileResponse("trips.html")
-@app.get("/vac") 
+@app.get("/vac.html") 
 def vac(): 
     return FileResponse("vac.html")
 
