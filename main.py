@@ -53,6 +53,32 @@ def main8():
     return FileResponse("MoreB.html")
 
 
+@app.get("/SOO1.html") 
+def SOO1(): 
+    return FileResponse("SOO1.html")
+@app.get("/SMI") 
+def SMI(): 
+    return FileResponse("SMI.html")
+@app.get("/par") 
+def par(): 
+    return FileResponse("par.html")
+@app.get("/sadmin") 
+def sadmin(): 
+    return FileResponse("sadmin.html")
+
+
+@app.get("/steach") 
+def steach(): 
+    return FileResponse("steach.html")
+@app.get("/trips") 
+def trips(): 
+    return FileResponse("trips.html")
+@app.get("/vac") 
+def vac(): 
+    return FileResponse("vac.html")
+
+
+
 
 class User(BaseModel): 
     login: str
