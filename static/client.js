@@ -1,4 +1,4 @@
-function clientpost(event) {
+function postclasses(event) {
     var phone = document.getElementById("phone").value;
     var first_name = document.getElementById("name").value;
     var zapros = new XMLHttpRequest();
@@ -50,7 +50,7 @@ function clientpost(event) {
 
 
 
-function post1() {
+function posttrips() {
     var zapros = new XMLHttpRequest();
     var modalBtn = document.getElementById("modalBtn");
     var modal = document.getElementById("myModal");
