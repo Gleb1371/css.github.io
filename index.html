@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div class="container p-5" id = "block1">
+        <div class="container p-5" id="block1">
             <div class="row justify-content-between">
                 <div class=" offset-lg-1 col-lg-5 col-12">
                     <h5>Частное учреждение дополнительного образования Языковой центр "Хайнань"</h5>
@@ -53,137 +53,32 @@
                         <li>Является партнером Городского центра развития образования мэрии города Новосибирска и
                             разработчиком заданий на <b>Всероссийскую олимпиаду школьников</b> по китайскому языку</li>
                     </ul>
-                </div>                
+                </div>
                 <div class="col-lg-5 col-12" id="block2">
                     <div class="form">
                         <p class="headF">Записаться на занятия</p>
-                        <p class="pF">Уроки проходят на базе общеобразовательных школ или в нашем офисе в группах или индивидуально</p>
+                        <p class="pF">Уроки проходят на базе общеобразовательных школ или в нашем офисе в группах или
+                            индивидуально</p>
                         <div class="d-flex">
-                            <input type="text" id="name" name="name" required minlength="4" maxlength="20" class="form1" placeholder="Ваше имя" />
+                            <input type="text" id="name" name="name" required minlength="4" maxlength="20" class="form1"
+                                placeholder="Ваше имя" />
                         </div>
                         <div class="d-flex">
-                            <input class="inp" type="tel" id="phone" name="phone" required placeholder="Номер телефона" class="form1" oninput="this.value = this.value.replace(/[^\d+\-\s]/g, ''); this.classList.remove('error')">
+                            <input class="inp" maxlength="11" type="tel" id="phone" name="phone" required
+                                placeholder="Номер телефона" class="form1"
+                                oninput="this.value = this.value.replace(/[^\d+\-\s]/g, ''); this.classList.remove('error')">
                             <span class="error-message" style="color: red;"></span>
                         </div>
-                        <button type="submit" formaction="#" class="btn red m-3">Записаться</button>
+                        <button type="submit" onclick="clientpost()" formaction="#"
+                            class="btn red m-3">Записаться</button>
                         <div id="errorAlert" class="error-alert"></div>
                         <div id="successAlert" class="success-alert"></div>
                     </div>
                 </div>
-                <!-- <script>
-                    const form = document.querySelector('.form');
-                    const nameInput = document.getElementById('name');
-                    const phoneInput = document.getElementById('phone');
-                    const errorAlert = document.getElementById('errorAlert');
-                    const successAlert = document.getElementById('successAlert');
-                    // Проверяем, есть ли уже сохраненные данные в Local Storage
-                    let classes = localStorage.getItem("classes");
-                    if (!classes) {
-                        classes = [];
-                    } else {
-                        classes = JSON.parse(classes);
-                    }
-                    form.addEventListener("click", function (event) {
-                        if (event.target.matches(".btn")) {
-                            const name = nameInput.value.trim(); // Удаляем начальные и конечные пробелы
-                            const phone = phoneInput.value.trim();
-                            let hasError = false; // Флаг для обозначения наличия ошибок
-                            if (name.length == 0 || phone.length == 0) {
-                                showError("Введите данные!");
-                                hasError = true;
-                            } else {
-                                nameInput.classList.remove('error');
-                                phoneInput.classList.remove('error');
-                                if (!/^\+?[0-9\s\-\(\)]+$/.test(phone) || phone.replace(/[^\d]/g, '').length !== 11) {
-                                    showError("Некорректный номер телефона!");
-                                    hasError = true;
-                                }
-                            }
-                            if (!hasError) {
-                                // Проверяем, существуют ли уже такие данные в объекте classes
-                                const existingClass = classes.find(item => item.username === name && item.number === phone);
-                                if (!existingClass) {
-                                    classes.push({ username: name, number: phone });
-                                    // Сохраняем данные в Local Storage
-                                    localStorage.setItem("classes", JSON.stringify(classes));
-                                    showSuccess("Спасибо, мы вам перезвоним!");
-                                } else {
-                                    showSuccess("Данные уже существуют!");
-                                }
-                            }
-                        }
-                    });
-                    function showError(message) {
-                        errorAlert.textContent = message;
-                        errorAlert.classList.add('active');
-                        successAlert.textContent = "";
-                        successAlert.classList.remove('active');
-                    }
-                    function showSuccess(message) {
-                        successAlert.textContent = message;
-                        successAlert.classList.add('active');
-                        errorAlert.textContent = "";
-                        errorAlert.classList.remove('active');
-                    }
-                </script> -->
-                <script>
-    const form = document.querySelector('.form');
-    const nameInput = document.getElementById('name');
-    const phoneInput = document.getElementById('phone');
-    const errorAlert = document.getElementById('errorAlert');
-    const successAlert = document.getElementById('successAlert');
-
-    form.addEventListener("click", async () => {
-        event.preventDefault();
-        const name = nameInput.value;
-        const phone = phoneInput.value;
-        if (event.target.matches(".btn") && name !== "" && phone !== "") {
-
-            try {
-                const response = await fetch(`/clients`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name,
-                        phone,
-                        role:'classes'
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ошибка при отправке данных на сервер');
-                }
-
-                const data = await response.json();
-                showSuccess("Спасибо, мы вам перезвоним!");
-            } catch (error) {
-                console.error(error);
-                showError("Произошла ошибка. Пожалуйста, попробуйте еще раз.");
-            }
-        }
-    });
-
-    function showError(message) {
-        errorAlert.textContent = message;
-        errorAlert.classList.add('active');
-        successAlert.textContent = "";
-        successAlert.classList.remove('active');
-    }
-
-    function showSuccess(message) {
-        successAlert.textContent = message;
-        successAlert.classList.add('active');
-        errorAlert.textContent = "";
-        errorAlert.classList.remove('active');
-    }
-</script>
-             
             </div>
         </div>
     </div>
-    <div class="pay" id = "block6">
+    <div class="pay" id="block6">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-3 col-12  ">
@@ -226,97 +121,35 @@
                         что повышают мотивацию к дальнейшему изучению китайского языка.
                     </p>
                     <div class="btn">
-                        <button type="button" class="btn btn-danger" id="modalBtn">Хочу в Китай!</button>
-                        <button type="button" class="btn btn-secondary"><a href="MoreB.html" class="text-white" style="padding: 0;">Узнать больше</a></button>
+                        <button type="button" onclick="post1()" class="btn btn-danger" id="modalBtn">Хочу в
+                            Китай!</button>
+                        <button type="button" class="btn btn-secondary"><a href="MoreB.html" class="text-white"
+                                style="padding: 0;">Узнать больше</a></button>
                     </div>
                     <div id="myModal" class="modal">
                         <div class="modal-content">
                             <span class="close">&times;</span>
                             <div class="container">
                                 <div class="mb-3">
-                                    <input class="inp" type="text" id="nameModal" name="nameModal" class="form-control" placeholder="Ваше имя" required minlength="4" maxlength="20">
+                                    <input class="inp" type="text" id="nameModal" name="nameModal" class="form-control"
+                                        placeholder="Ваше имя" required minlength="4" maxlength="20">
                                 </div>
                                 <div class="mb-3">
-                                    <input class="inp" type="tel" id="phoneModal" name="phoneModal" required placeholder="Номер телефона" class="form1" oninput="this.value = this.value.replace(/[^\d+\-\s]/g, ''); this.classList.remove('error')">
+                                    <input class="inp" maxlength="11" type="tel" id="phoneModal" name="phoneModal"
+                                        required placeholder="Номер телефона" class="form1"
+                                        oninput="this.value = this.value.replace(/[^\d+\-\s]/g, ''); this.classList.remove('error')">
                                     <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="text-center">
-                                    <button id="submitBtn" type="button" class="btn red-btn">Оставить заявку</button>
+                                    <button id="submitBtn" type="button"  
+                                        class="btn red-btn">Оставить заявку</button>
                                 </div>
                                 <div id="errorAlert1" style="color: red; margin-top: 10px;"></div>
                                 <div id="successAlert1" style="color: green; margin-top: 10px;"></div>
                             </div>
                         </div>
                     </div>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var modalBtn = document.getElementById("modalBtn");
-                            var modal = document.getElementById("myModal");
-                            var closeBtn = document.querySelector(".modal-content .close");
-                            var nameInput = document.getElementById('nameModal');
-                            var phoneInput = document.getElementById('phoneModal');
-                            var submitBtn = document.getElementById('submitBtn');
-                            
-                            // Проверяем, есть ли уже сохраненные данные в Local Storage
-                            let trips = localStorage.getItem("trips");
-                            if (!trips) {
-                                trips = [];
-                            } else {
-                                trips = JSON.parse(trips);
-                            }
-                            
-                            modalBtn.addEventListener("click", function() {
-                                modal.style.display = "block";
-                            });
-                            
-                            closeBtn.addEventListener("click", function() {
-                                modal.style.display = "none";
-                            });
-                            
-                            submitBtn.addEventListener("click", function(event) {
-                                event.preventDefault();
-                                var name = nameInput.value.trim();
-                                var phone = phoneInput.value.trim();
-                                var errorAlert1 = document.getElementById('errorAlert1'); // Используем правильный идентификатор
-                                var successAlert1 = document.getElementById('successAlert1'); // Используем правильный идентификатор
-                                
-                                if (name.length == 0 || phone.length == 0) {
-                                    errorAlert1.textContent = "Введите данные!";
-                                    nameInput.classList.add('error');
-                                    phoneInput.classList.add('error');
-                                } else {
-                                    nameInput.classList.remove('error');
-                                    phoneInput.classList.remove('error');
-                                    
-                                    if (!/^\+?[0-9\s\-\(\)]+$/.test(phone) || phone.replace(/[^\d]/g, '').length !== 11) {
-                                        errorAlert1.textContent = "Некорректный номер телефона!";
-                                        phoneInput.classList.add('error');
-                                    } else {
-                                        errorAlert1.textContent = ""; // Очистить сообщение об ошибке при вводе корректных данных
-                                        successAlert1.textContent = "Спасибо, мы вам перезвоним!";
-                                        
-                                        // Создаем объект с данными заявки
-                                        var trip = {
-                                            username: name,
-                                            number: phone
-                                        };
-                                        
-                                        // Проверяем, существует ли уже такая запись в trips
-                                        var isTripExist = trips.some(function(item) {
-                                            return item.username === name && item.number === phone;
-                                        });
-                                        
-                                        if (!isTripExist) {
-                                            trips.push(trip);
-                                            localStorage.setItem("trips", JSON.stringify(trips));
-                                        } else {
-                                            successAlert1.textContent = "Данные уже существуют!";
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    </script>                           
+                     
                 </article>
             </div>
             <div class="col-lg-5 col-12 offset-lg-1">
@@ -435,6 +268,7 @@
             </div>
         </footer>
     </div>
+    <script src="/static/client.js"></script>
 </body>
 
 </html>
