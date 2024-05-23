@@ -119,7 +119,7 @@ function posttrips() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    post1(); // Вызываем функцию для инициализации обработчиков событий
+    posttrips(); // Вызываем функцию для инициализации обработчиков событий
 });
 
 
