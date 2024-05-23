@@ -24,6 +24,35 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/") 
 def main(): 
     return FileResponse("index.html")
+@app.get("/index.html") 
+def main1(): 
+    return FileResponse("index.html")
+@app.get("/admin") 
+def main2(): 
+    return FileResponse("admin.html")
+@app.get("/classes") 
+def main3(): 
+    return FileResponse("classes.html")
+@app.get("/entarnal") 
+def main4(): 
+    return FileResponse("entarnal.html")
+
+
+
+@app.get("/Certif.html") 
+def main5(): 
+    return FileResponse("Certif.html")
+@app.get("/LKB") 
+def main6(): 
+    return FileResponse("LKB.html")
+@app.get("/LKBM") 
+def main7(): 
+    return FileResponse("LKBM.html")
+@app.get("/MoreB") 
+def main8(): 
+    return FileResponse("MoreB.html")
+
+
 
 class User(BaseModel): 
     login: str
