@@ -69,12 +69,71 @@
                                 oninput="this.value = this.value.replace(/[^\d+\-\s]/g, ''); this.classList.remove('error')">
                             <span class="error-message" style="color: red;"></span>
                         </div>
-                        <button type="submit" onclick="postclasses()" formaction="#"
+                        <button type="submit" onclick="clientpost()"  
                             class="btn red m-3">Записаться</button>
+                         
                         <div id="errorAlert" class="error-alert"></div>
                         <div id="successAlert" class="success-alert"></div>
                     </div>
                 </div>
+                <!-- <script>
+                    const form = document.querySelector('.form');
+                    const nameInput = document.getElementById('name');
+                    const phoneInput = document.getElementById('phone');
+                    const errorAlert = document.getElementById('errorAlert');
+                    const successAlert = document.getElementById('successAlert');
+                    // Проверяем, есть ли уже сохраненные данные в Local Storage
+                    let classes = localStorage.getItem("classes");
+                    if (!classes) {
+                        classes = [];
+                    } else {
+                        classes = JSON.parse(classes);
+                    }
+                    form.addEventListener("click", function (event) {
+                        if (event.target.matches(".btn")) {
+                            const name = nameInput.value.trim(); // Удаляем начальные и конечные пробелы
+                            const phone = phoneInput.value.trim();
+                            let hasError = false; // Флаг для обозначения наличия ошибок
+                            if (name.length == 0 || phone.length == 0) {
+                                showError("Введите данные!");
+                                hasError = true;
+                            } else {
+                                nameInput.classList.remove('error');
+                                phoneInput.classList.remove('error');
+                                if (!/^\+?[0-9\s\-\(\)]+$/.test(phone) || phone.replace(/[^\d]/g, '').length !== 11) {
+                                    showError("Некорректный номер телефона!");
+                                    hasError = true;
+                                }
+                            }
+                            if (!hasError) {
+                                // Проверяем, существуют ли уже такие данные в объекте classes
+                                const existingClass = classes.find(item => item.username === name && item.number === phone);
+                                if (!existingClass) {
+                                    classes.push({ username: name, number: phone });
+                                    // Сохраняем данные в Local Storage
+                                    localStorage.setItem("classes", JSON.stringify(classes));
+                                    showSuccess("Спасибо, мы вам перезвоним!");
+                                } else {
+                                    showSuccess("Данные уже существуют!");
+                                }
+                            }
+                        }
+                    });
+                    function showError(message) {
+                        errorAlert.textContent = message;
+                        errorAlert.classList.add('active');
+                        successAlert.textContent = "";
+                        successAlert.classList.remove('active');
+                    }
+                    function showSuccess(message) {
+                        successAlert.textContent = message;
+                        successAlert.classList.add('active');
+                        errorAlert.textContent = "";
+                        errorAlert.classList.remove('active');
+                    }
+                </script> -->
+
+
             </div>
         </div>
     </div>
@@ -121,7 +180,7 @@
                         что повышают мотивацию к дальнейшему изучению китайского языка.
                     </p>
                     <div class="btn">
-                        <button type="button" onclick="posttrips()" class="btn btn-danger" id="modalBtn">Хочу в
+                        <button type="button" onclick="post1()" class="btn btn-danger" id="modalBtn">Хочу в
                             Китай!</button>
                         <button type="button" class="btn btn-secondary"><a href="MoreB.html" class="text-white"
                                 style="padding: 0;">Узнать больше</a></button>
@@ -141,15 +200,14 @@
                                     <span class="error-message" style="color: red;"></span>
                                 </div>
                                 <div class="text-center">
-                                    <button id="submitBtn" type="button"  
-                                        class="btn red-btn">Оставить заявку</button>
+                                    <button id="submitBtn" type="button" class="btn red-btn">Оставить заявку</button>
                                 </div>
                                 <div id="errorAlert1" style="color: red; margin-top: 10px;"></div>
                                 <div id="successAlert1" style="color: green; margin-top: 10px;"></div>
                             </div>
                         </div>
                     </div>
-                     
+
                 </article>
             </div>
             <div class="col-lg-5 col-12 offset-lg-1">
