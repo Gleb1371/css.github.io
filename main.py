@@ -19,7 +19,7 @@ connection = psycopg2.connect(
         port=5432,
         database= "hainan_v1i3",
         user="hainan_v1i3_user",
-        password="postgres://hainan_v1i3_user:lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ@dpg-coqfvgn79t8c738glb60-a.oregon-postgres.render.com/hainan_v1i3"
+        password="lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ"
     )
 app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/") 
