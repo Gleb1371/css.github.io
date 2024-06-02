@@ -9,16 +9,17 @@ from typing import Optional
 SECRET_KEY = "praktika2024"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 90
+from typing import List, Optional
 
 app = FastAPI()
 
 # Устанавливаем соединение с базой данных PostgreSQL через pgAdmin 4
 connection = psycopg2.connect(
-        host="dpg-coqfvgn79t8c738glb60-a",
+        host="localhost",
         port=5432,
-        database= "hainan_v1i3",
-        user="hainan_v1i3_user",
-        password="lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ"
+        database= "hainan",
+        user="postgres",
+        password="password123"
     )
 app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/") 
@@ -36,9 +37,6 @@ def main3():
 @app.get("/entarnal.html") 
 def main4(): 
     return FileResponse("entarnal.html")
-
-
-
 @app.get("/Certif.html") 
 def main5(): 
     return FileResponse("Certif.html")
@@ -51,8 +49,6 @@ def main7():
 @app.get("/MoreB.html") 
 def main8(): 
     return FileResponse("MoreB.html")
-
-
 @app.get("/SOO1.html") 
 def SOO1(): 
     return FileResponse("SOO1.html")
@@ -65,8 +61,6 @@ def par():
 @app.get("/sadmin.html") 
 def sadmin(): 
     return FileResponse("sadmin.html")
-
-
 @app.get("/steach.html") 
 def steach(): 
     return FileResponse("steach.html")
@@ -76,142 +70,210 @@ def trips():
 @app.get("/vac.html") 
 def vac(): 
     return FileResponse("vac.html")
+@app.get("/mainAdmin.html") 
+def vac(): 
+    return FileResponse("mainAdmin.html")
 
-
-
-
-class User(BaseModel): 
-    login: str
-    password: str
-    first_name: str
-    phone_number: str  
-    role: str
-
-class Client(BaseModel):
+class User(BaseModel):
+    login: Optional[str]
+    password: Optional[str]
     first_name: Optional[str]
     phone_number: Optional[str]
     role: Optional[str]
 
 @app.get("/users") 
 def get_users(): 
-        cursor = connection.cursor() 
-        cursor.execute("SELECT * FROM users") 
-        result = cursor.fetchall()
-        cursor.close() 
-        return {"users": result} 
-  
-@app.get("/users/{id}") 
-def get_user_by_id(id: int): 
     cursor = connection.cursor() 
-    cursor.execute(f"SELECT * FROM users WHERE id = {id}") 
-    result = cursor.fetchone()
+    
+    sql = "SELECT login, password, first_name, phone_number, role FROM users"
+    cursor.execute(sql)
+    spisok = cursor.fetchall()
+
+    teachers = []
+    for row in spisok:
+        teacher = {
+            "login": row[0],
+            "password": row[1],
+            "first_name": row[2],
+            "phone_number": row[3],
+            "role": row[4]
+        }
+        teachers.append(teacher)
+
+    return {"users": teachers}
+  
+@app.get("/users/{login}") 
+def get_user_by_id(login: str): 
+    cursor = connection.cursor() 
+    cursor.execute(f"SELECT * FROM users WHERE login = %s", (login,)) 
+    data = cursor.fetchone()
     cursor.close()
-    if not result:
+
+    if not data:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
-    return {"User": result} 
+
+    teacher_data = {
+        "login": data[0],
+        "password": data[1],
+        "first_name": data[2],
+        "phone_number": data[3]
+    } 
+    return teacher_data
   
-@app.delete("/users/{id}") 
-def delete_user_by_id(id: int): 
+@app.delete("/users/{login}") 
+def delete_user_by_id(login: str): 
     cursor = connection.cursor() 
-    cursor.execute(f"SELECT * FROM users WHERE id = {id}") 
+    cursor.execute(f"SELECT * FROM users WHERE login = %s", (login,)) 
     result = cursor.fetchone() 
     if not result: 
         raise HTTPException(status_code=404, detail="Пользователь не найден")
-    cursor.execute(f"DELETE FROM users WHERE id = {id}") 
+    cursor.execute(f"DELETE FROM users WHERE login = %s", (login,)) 
     connection.commit() 
     cursor.close() 
-    return {"message": "Пользователь удалён"}  
+    return {"message": f"Пользователь с логином {login} удалён"}  
 
 @app.post("/users")
-def create_user(user: User):
+def user(user: User):
     cursor = connection.cursor()
-    cursor.execute(
-        "SELECT * FROM users WHERE login = %s",
-        (user.login,)
-    )
+    user_look = "SELECT * FROM users WHERE login = %s"
+    cursor.execute(user_look, (user.login,))
     existing_user = cursor.fetchone()
+
+    if not (user.login and user.first_name and user.phone_number and user.password and user.role):
+        raise HTTPException(status_code=400, detail="Не заполнены обязательные поля")
+
     if existing_user:
-        cursor.close()
-        raise HTTPException(status_code=400, detail="Пользователь с таким логином уже существует")
-
-    cursor.execute(
-        "INSERT INTO users (login, password, first_name, phone_number, role) VALUES (%s, %s, %s, %s, %s)",
-        (user.login, user.password, user.first_name, user.phone_number, user.role)
-    )
-    connection.commit()
-    cursor.close()
-    return {"message": "Пользователь успешно создан"}
-
-@app.put("/users/{id}")
-def update_user(id: int, user_update: User):
-    cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM users WHERE id = {id}")
-    existing_user = cursor.fetchone()
-
-    if not existing_user:
-        raise HTTPException(status_code=404, detail="Пользователь не найден")
-
-    cursor.execute(
-        "UPDATE users SET login = %s, password = %s, first_name = %s, phone_number = %s, role = %s WHERE id = %s",
-        (user_update.login, user_update.password, user_update.first_name, user_update.phone_number, user_update.role, id)
-    )
-    connection.commit()
-    cursor.close()
-
-    return {"message": "Пользователь успешно обновлен"}
-
-@app.post("/users/login")
-def login_user(user_data: User):
-    cursor = connection.cursor()
-    sql = "SELECT id FROM users WHERE login = %s AND password = %s"
-    val = (user_data.login, user_data.password)
-    cursor.execute(sql, val)
-    id = cursor.fetchone()
-
-    if not id:
         raise HTTPException(
-            status_code=400, detail="Неверный логин или пароль"
+            status_code=400,
+            detail="Пользователь с таким логином уже существует"
         )
 
-    access_token = generate_access_token(id)
+    sql = "INSERT INTO users (login, password, first_name, phone_number, role) VALUES (%s, %s, %s, %s, %s)"
+    val = (user.login, user.password, user.first_name, user.phone_number, user.role)
+    cursor.execute(sql, val)
+    connection.commit()
+    print("Пользователь добавлен")
+    return {"message": "Пользователь добавлен"}
 
-    return {"access_token": access_token, "token_type": "Bearer", "message": "Вход выполнен успешно"}
+@app.put("/users/{login}")
+def update_user(login: str, user_update: User):
+    cursor = connection.cursor()
+    
+    # Проверяем, существует ли пользователь с данным логином
+    cursor.execute("SELECT * FROM users WHERE login = %s", (login,))
+    existing_user = cursor.fetchone()
+    
+    if not existing_user:
+        cursor.close()
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
 
-def generate_access_token(id: int):
-    expiration_time = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    payload = {"sub": str(id), "exp": expiration_time}
-    access_token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-    return access_token
+    update_query = "UPDATE users SET"
+    update_values = []
+    
+    if user_update.login:
+        update_query += " login=%s, "
+        update_values.append(user_update.login)
+    if user_update.password:
+        update_query += " password=%s, "
+        update_values.append(user_update.password)
+    if user_update.first_name:
+        update_query += " first_name=%s, "
+        update_values.append(user_update.first_name)
+    if user_update.phone_number:
+        update_query += " phone_number=%s, "
+        update_values.append(user_update.phone_number)
+        
+    # Удаляем последнюю запятую и пробел
+    update_query = update_query.rstrip(', ')
+    update_query += " WHERE login = %s"
+    update_values.append(login)
+    
+    try:
+        cursor.execute(update_query, tuple(update_values))
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        cursor.close()
+        raise HTTPException(status_code=500, detail="Ошибка базы данных")
+    
+    cursor.close()
+    
+    return {
+        "status": "success",
+        "message": f"Пользователь с логином {login} успешно обновил информацию о себе",
+    }
+
+###############################################################################################################
+class UserLogin(BaseModel):
+    login: str
+    password: str
+
+@app.post("/users/login")
+def login(user: UserLogin):
+    cursor = connection.cursor()
+    user_look = "SELECT login, password, role FROM users WHERE login = %s"
+    cursor.execute(user_look, (user.login,))
+    existing_user = cursor.fetchone()
+
+    if not existing_user or existing_user[1] != user.password:
+        raise HTTPException(status_code=400, detail="Неверные данные")
+
+    return {"access_token": "fake_token", "role": existing_user[2]}
+###############################################################################################################
+
+class Client(BaseModel):
+    first_name: Optional[str]
+    phone_number: Optional[str]
+    role: Optional[str]
 
 @app.get("/clients")
 def get_clients():
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM clients")
-    result = cursor.fetchall()
-    cursor.close()
-    return {"clients": result}
 
-@app.get("/clients/{id}")
-def get_client_by_id(id: int):
+    sql = "SELECT first_name, phone_number, role FROM clients"
+    cursor.execute(sql)
+    spisok = cursor.fetchall()
+
+    client_classes = []
+    for row in spisok:
+        client = {
+            "first_name": row[0],
+            "phone_number": row[1],
+            "role": row[2]
+        }
+        client_classes.append(client)
+
+    return {"clients": client_classes}
+
+@app.get("/clients/{phone_number}")
+def get_client_by_id(phone_number: str):
     cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM clients WHERE id = {id}")
-    result = cursor.fetchone()
+    cursor.execute("SELECT * FROM clients WHERE phone_number = %s", (phone_number,))
+    data = cursor.fetchone()
+    
     cursor.close()
+    if not data:
+        raise HTTPException(status_code=404, detail="Клиент не найден")
+    
+    # Создаем словарь с данными
+    client_data = {
+        "first_name": data[1],
+        "phone_number": data[2]
+    }
+    return client_data
+
+@app.delete("/clients/{phone_number}")
+def delete_client_by_phone(phone_number: str):
+    cursor = connection.cursor()
+    # Используем параметризованный запрос для защиты от SQL-инъекций
+    cursor.execute("SELECT * FROM clients WHERE phone_number = %s", (phone_number,))
+    result = cursor.fetchone()
     if not result:
         raise HTTPException(status_code=404, detail="Клиент не найден")
-    return result
-
-@app.delete("/clients/{id}")
-def delete_client_by_id(id: int):
-    cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM clients WHERE id = {id}")
-    result = cursor.fetchone()
-    if not result:
-        raise HTTPException(status_code=404, detail="Клиент не найден")
-    cursor.execute(f"DELETE FROM clients WHERE id = {id}")
+    cursor.execute("DELETE FROM clients WHERE phone_number = %s", (phone_number,))
     connection.commit()
     cursor.close()
-    return {"message": f"Клиент с ID {id} удален"}
+    return {"message": f"Клиент с номером телефона {phone_number} удален"}
 
 @app.post("/clients")
 def client(user_data: Client):
@@ -226,34 +288,36 @@ def client(user_data: Client):
     if answer:
         raise HTTPException(
             status_code=400,
-            detail="чел с таким номером телефона уже существует)",
-        )
-         
+            detail="Клиент таким номером телефона уже существует)",
+        )   
 
     # иначе новый пользователь
     sql = "INSERT INTO clients (phone_number, first_name,role) VALUES (%s, %s,%s)"
     val = (user_data.phone_number, user_data.first_name,user_data.role)
     cursor.execute(sql, val)
     connection.commit()
-    print("чел добавлен")
-    return {"message": "чел добавлен"}
+    print("Клиент добавлен")
+    return {"message": "Клиент добавлен"}
 
+@app.put("/clients/{phone_number}")
+def update_client(phone_number: str, client_update: Client):
+    cursor = connection.cursor()                    
+    update_query="UPDATE clients SET"
+    update_values = []
+    if client_update.first_name:
+        update_query += " first_name= %s, "
+        update_values.append(client_update.first_name)
+    if client_update.phone_number:
+        update_query += " phone_number = %s, "
+        update_values.append(client_update.phone_number)
+    update_query = update_query[:-2]
+    update_query += " WHERE phone_number = %s"
+    update_values.append(phone_number)
 
+    cursor.execute(update_query, tuple(update_values))
 
-@app.put("/clients/{id}")
-def update_client(id: int, client_update: Client):
-    cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM clients WHERE id = {id}")
-    existing_client = cursor.fetchone()
-
-    if not existing_client:
-        raise HTTPException(status_code=404, detail="Клиент не найден")
-
-    cursor.execute(
-        "UPDATE clients SET first_name = %s, phone_number = %s, role = %s WHERE id = %s",
-        (client_update.first_name, client_update.phone_number, client_update.role, id)
-    )
     connection.commit()
-    cursor.close()
-
-    return {"message": "Клиент успешно обновлен"}
+    return {
+        "status": "success",
+        "message": f"Пользователь с id:{phone_number} успешно обновил информацию о себе",
+    }
