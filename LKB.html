@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/static/LKB.css">
+    <link rel="stylesheet" type="text/css" href="static/LKB.css">
 </head>
 
 <body>
@@ -34,58 +34,16 @@
                 <h3 class="text-center">Вход</h3>
                 <form id="loginForm" action="#" method="POST">
                     <div class="mb-3">
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Логин">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Логин" required>
                     </div>
                     <div class="mb-3">
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Пароль">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
                     </div>
                     <button type="submit" class="btn btn-danger" style="text-align: center;">Войти</button>
                     <div id="errorMessage" class="mt-2" style="color: red;"></div>
                 </form>
             </div>
         </div>
-        
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const form = document.getElementById('loginForm');
-                const usernameInput = document.getElementById('username');
-                const passwordInput = document.getElementById('password');
-                const errorMessage = document.getElementById('errorMessage');
-                const admins = JSON.parse(localStorage.getItem('admins')) || [];
-                const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
-        
-                // Слушатель события на отправку формы
-                form.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    const enteredUsername = usernameInput.value.trim();
-                    const enteredPassword = passwordInput.value.trim();
-        
-                    // Проверяем введенные данные с данными администраторов
-                    const isAdmin = admins.some(admin => admin.username === enteredUsername && admin.password === enteredPassword);
-        
-                    // Проверяем введенные данные с данными пользователей
-                    const isUser = teachers.some(user => user.username === enteredUsername && user.password === enteredPassword);
-        
-                    if (enteredUsername !== '' && enteredPassword !== '') {
-                        if (isAdmin || isUser) {
-                            // Если введенные данные соответствуют администратору, перенаправляем на страницу admin.html
-                            if (isAdmin) {
-                                window.location.href = 'admin.html';
-                            } else {
-                                // В противном случае перенаправляем на страницу LKMB.html
-                                window.location.href = 'LKMB.html';
-                            }
-                        } else {
-                            // Выводим сообщение об ошибке
-                            errorMessage.textContent = 'Неверные данные!';
-                        }
-                    } else {
-                        // Выводим сообщение об ошибке
-                        errorMessage.textContent = 'Введите данные!';
-                    }
-                });
-            });
-        </script>
 
     <footer class="container-fluid foot1">
         <div class="row">
@@ -112,4 +70,5 @@
             </div>
         </div>
     </footer>
+    <script src="/static/enter.js"></script>
 </body>
