@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список клиентов (поездки)</title>
+    <title>Список клиентов (занятия)</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -38,12 +38,13 @@
                     <p>Вы действительно хотите удалить данного клиента?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="deleteTrip()">Да</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteTrips()">Да</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
                 </div>
             </div>
         </div>
     </div>
+    
 
     <!-- Модальное окно для добавления клиента -->
     <div class="modal fade" id="addTripModal" tabindex="-1" role="dialog" aria-labelledby="addTripModalLabel" aria-hidden="true">
@@ -61,7 +62,7 @@
                             <input type="text" id="username" name="username" class="form-control" placeholder="Имя">
                         </div>
                         <div class="mb-3">
-                            <input type="tel" id="number" name="number" class="form-control" placeholder="Номер телефона (только цифры)">
+                            <input type="tel" maxlength="11" id="number" name="number" class="form-control" placeholder="Номер телефона">
                         </div>
                         <button type="submit" class="btn btn-danger d-block mx-auto">Добавить</button>
                     </form>
@@ -86,7 +87,7 @@
                             <input type="text" id="editUsername" name="username" class="form-control" placeholder="Имя">
                         </div>
                         <div class="mb-3">
-                            <input type="tel" id="editNumber" name="number" class="form-control" placeholder="Номер телефона (только цифры)">
+                            <input type="tel" maxlength="11" id="editNumber" name="number" class="form-control" placeholder="Номер телефона">
                         </div>
                         <button type="submit" class="btn btn-danger d-block mx-auto">Сохранить</button>
                     </form>
@@ -95,114 +96,9 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let trips = JSON.parse(localStorage.getItem('trips')) || [];
-            const tripsList = document.getElementById('tripsList');
-
-            // Функция для отображения списка клиентов
-            function renderTrips() {
-                tripsList.innerHTML = '';
-                trips.forEach(function(trip, index) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${trip.username}</td>
-                        <td>${trip.number}</td>
-                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#editTripModal" onclick="editTrip(${index})">Редактировать</button></td>
-                        <td><button class="btn btn-danger" onclick="confirmDelete(${index})">Удалить</button></td>
-                    `;
-                    tripsList.appendChild(row);
-                });
-            }
-            renderTrips();
-
-            // Функция для подтверждения удаления клиента
-            window.confirmDelete = function(index) {
-                $('#confirmDeleteModal').modal('show');
-                document.getElementById('confirmDeleteModal').dataset.index = index;
-            };
-
-            // Функция для удаления клиента
-            window.deleteTrip = function() {
-                const index = document.getElementById('confirmDeleteModal').dataset.index;
-                trips.splice(index, 1);
-                localStorage.setItem('trips', JSON.stringify(trips));
-                renderTrips();
-                $('#confirmDeleteModal').modal('hide');
-                alert('Клиент успешно удален!');
-            };
-
-            // Функция для открытия модального окна добавления клиента
-            function openAddTripModal() {
-                $('#addTripModal').modal('show');
-            }
-
-            // Функция для открытия модального окна редактирования клиента
-            window.editTrip = function(index) {
-                const trip = trips[index];
-                document.getElementById('editUsername').value = trip.username;
-                document.getElementById('editNumber').value = trip.number;
-                document.getElementById('editTripForm').onsubmit = function(event) {
-                    event.preventDefault();
-                    const usernameInput = document.getElementById('editUsername');
-                    const numberInput = document.getElementById('editNumber');
-                    const enteredUsername = usernameInput.value.trim();
-                    const enteredNumber = numberInput.value.trim();
-                    if (!enteredUsername || !enteredNumber) {
-                        alert('Пожалуйста, заполните все поля!');
-                        return;
-                    }
-                    // Проверяем длину номера телефона
-                    if (enteredNumber.length !== 11) {
-                        alert('Пожалуйста, введите корректный номер телефона! (11 цифр)');
-                        return;
-                    }
-                    trips[index] = { username: enteredUsername, number: enteredNumber };
-                    localStorage.setItem('trips', JSON.stringify(trips));
-                    renderTrips();
-                    alert('Клиент успешно отредактирован!');
-                    $('#editTripModal').modal('hide');
-                };
-            };
-
-            // Обработчик события отправки формы для добавления клиента
-            const addTripForm = document.getElementById('addTripForm');
-            addTripForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const usernameInput = document.getElementById('username');
-                const numberInput = document.getElementById('number');
-                const enteredUsername = usernameInput.value.trim();
-                const enteredNumber = numberInput.value.trim();
-                if (!enteredUsername || !enteredNumber) {
-                    alert('Пожалуйста, заполните все поля!');
-                    return;
-                }
-                // Проверяем длину номера телефона
-                if (enteredNumber.length !== 11) {
-                    alert('Пожалуйста, введите корректный номер телефона! (11 цифр)');
-                    return;
-                }
-                trips.push({ username: enteredUsername, number: enteredNumber });
-                localStorage.setItem('trips', JSON.stringify(trips));
-                renderTrips();
-                alert('Клиент успешно добавлен!');
-                $('#addTripModal').modal('hide');
-                usernameInput.value = '';
-                numberInput.value = '';
-            });
-
-            // Запрет ввода символов, кроме цифр, в полях ввода номера телефона
-            const phoneInputs = document.querySelectorAll('input[type="tel"]');
-            phoneInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    this.value = this.value.replace(/\D/g, '');
-                });
-            });
-        });
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/static/trips.js"></script>
 </body>
 </html>
