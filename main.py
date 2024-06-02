@@ -15,11 +15,11 @@ app = FastAPI()
 
 # Устанавливаем соединение с базой данных PostgreSQL через pgAdmin 4
 connection = psycopg2.connect(
-        host="localhost",
+        host="dpg-coqfvgn79t8c738glb60-a",
         port=5432,
-        database= "hainan",
-        user="postgres",
-        password="password123"
+        database= "hainan_v1i3",
+        user="hainan_v1i3_user",
+        password="postgres://hainan_v1i3_user:lwftcEojXOLYdS8GeUoixNhGSB9OtZyJ@dpg-coqfvgn79t8c738glb60-a.oregon-postgres.render.com/hainan_v1i3"
     )
 app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/") 
